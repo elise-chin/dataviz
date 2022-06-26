@@ -1,0 +1,11 @@
+[theme]
+textColor = '#000000'
+primaryColor = '#38b6ff'
+backgroundColor = '#DAF2FF'
+secondaryBackgroundColor = '#C1EAFF'
+font='monospace'
+
+[server]
+
+maxUploadSize = 2000
+
