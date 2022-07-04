@@ -144,18 +144,19 @@ def bubble(happiness_df, region, xaxis='economy', yaxis='health'):
     fig.update_traces(marker=dict(size=15, line=dict(width=1), opacity=0.8))
     fig.update_layout(xaxis=dict(gridwidth=2),
                       yaxis=dict(gridwidth=2),
-                      title="Economy VS Health colored by happiness score")
-    if 'France' in region:
-        x = float(df[df['country']=='France'].economy)
-        y = float(df[df['country']=='France'].health)
+                      title=f"{xaxis} VS {yaxis} colored by happiness score")
+    if 'France' in region or len(region)==0:
+        x = float(df[df['country']=='France'][xaxis])
+        y = float(df[df['country']=='France'][yaxis])
         fig.add_annotation(x=x, y=y,
             text="France",
             showarrow=True,
             arrowhead=1,
-            arrowsize=2,
+            arrowsize=3,
             arrowwidth=2,
-    axref="x domain",
-    ayref="y")
+
+                           
+                          )
     fig.update_annotations(font_size=20)
     fig.update_layout(
     margin=dict(l=0, r=0, t=40, b=0))

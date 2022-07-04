@@ -14,6 +14,8 @@ happiness_df = pd.read_pickle('happiness_df_pop')
 #happiness + pop + city + sunshine hour ds capitale en EU en 2021
 sunshine_df = pd.read_pickle('sunshine_df')
 
+final_table=pd.read_pickle('final_table')
+
 
 countries_of_interest = ['Finland', 'Denmark', 'Norway', 'Sweden', 'France']
 
@@ -144,6 +146,8 @@ with st.container():  # Information
 
         plot_bar_criteria(happiness_df, ['France', 'Sweden'], criteria_list, title="Contribution of criterias to the happiness score in France and Finland")
 
+                           
+st.dataframe(final_table)
 
 
 
