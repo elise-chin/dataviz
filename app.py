@@ -14,7 +14,7 @@ happiness_df = pd.read_pickle('happiness_df_pop')
 #happiness + pop + city + sunshine hour ds capitale en EU en 2021
 sunshine_df = pd.read_pickle('sunshine_df')
 
-final_table=pd.read_pickle('final_table')
+#final_table=pd.read_pickle('final_table')
 
 
 countries_of_interest = ['Finland', 'Denmark', 'Norway', 'Sweden', 'France']
@@ -60,6 +60,11 @@ col1.metric("Number of countries", "155")
 col2.metric("Year of creation", "2012")
 col3.metric("Lowest score", "2.40", "-(Afghanistan - 2022)")
 col4.metric("Highest score", "7.84", "(Finland - 2021)")
+
+with st.container():
+    col1, col2 = st.columns([1,1])
+with col2:
+    st.markdown("##### Happiness ladder : 0 = worst life you could have ; 10 = best life you could have")
 
 st.subheader('The factors')
 col1, col2, col3 = st.columns(3)
@@ -169,19 +174,23 @@ st.write("_" * 34)
 
 ##################################
 
-st.header('What are the differences between France and Nordic countries, in practice ?')          
+st.header('What are the differences between France and Nordic countries, in practice?')  
+st.write('Year 2021')
         
 with st.container():  # Information
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([3,2])
     with col1:
-        sunshine(sunshine_df)         
+        st.write('The factors influencing happiness in Nordic and richest countries')
+        st.image(  # Logo
+            os.path.join(os.getcwd() + "/table.png"), width=1200)      
     with col2:
+        country = st.selectbox('Country to compare',['Sweden','Norway','Denmark','Finland'])
         criteria_list = ['economy', 'social_support', 'health', 'freedom', 'trust', 'generosity']
 
-        plot_bar_criteria(happiness_df, ['France', 'Sweden'], criteria_list, title="Contribution of criterias to the happiness score in France and Finland")
+        plot_bar_criteria(happiness_df, ['France', country], criteria_list, title=f"Contribution of criteria to the happiness score in France and {country}")
+        
+        sunshine(sunshine_df) 
 
-                           
-st.dataframe(final_table)
 
 
 

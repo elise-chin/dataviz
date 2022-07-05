@@ -113,23 +113,29 @@ def plot_heat_corr(happiness_df, region=[]):
     else:
         temp = df[['happiness_score','economy', 'health', 'social_support', 'freedom', 'trust', 'generosity']]
     corr=temp.corr()
-    #print(z_text)
+    corr=corr.drop('happiness_score')
+    cols=corr.columns[1:]
+    corr=(corr[['happiness_score']])
     fig = go.Figure(data=go.Heatmap(
-        x=corr.columns,
-        y=corr.columns,
+        x=['Happiness Score'],
+        y=cols,
         z=corr,
         colorscale=px.colors.diverging.Spectral,
         zmin=-1,
         zmax=1
     ))
+    #corr = corr.drop('happiness_score')
+    corr = corr.round(2)
+    fig.update_traces(text=corr.values, texttemplate="%{text}",textfont_size=25)
     fig.update_layout(
     autosize=False,
-    width=500,
-    height=700,
-    title="Correlation heatmap of happiness criterions")
+    width=300,
+    height=600)
+    fig.update_traces(showscale=False)
     fig.update_layout(
-    margin=dict(l=0, r=0, t=40, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    margin=dict(l=150, r=0, t=40, b=0),
+    title="Correlation with happiness")
+    st.plotly_chart(fig, use_container_width=False)
 
     
 def bubble(happiness_df, region, xaxis='economy', yaxis='health'):
@@ -137,10 +143,17 @@ def bubble(happiness_df, region, xaxis='economy', yaxis='health'):
         df = happiness_df
     else:
         df = happiness_df[happiness_df['country'].isin(region)]
-    fig = px.scatter(df, x=xaxis, y=yaxis, color="happiness_score", animation_frame='year',
-                 hover_name="country", size_max=30, height=600)
-                #range_x=[min(df.economy)-0.1,max(df.economy)+0.1],
-                #range_y =[min(df.health)-0.05, max(df.health)+0.05])
+        
+    if xaxis == 'economy' or yaxis=='economy':    
+        fig = px.scatter(df, x=xaxis, y=yaxis, color="happiness_score", animation_frame='year',
+                     hover_name="country", size_max=30, height=600,
+                    range_x=[-0.1,2],
+                    range_y =[-0.1,1.1])
+    else:
+        fig = px.scatter(df, x=xaxis, y=yaxis, color="happiness_score", animation_frame='year',
+                     hover_name="country", size_max=30, height=600,
+                    range_x=[-0.1,0.8],
+                    range_y =[-0.1,0.8])
     fig.update_traces(marker=dict(size=15, line=dict(width=1), opacity=0.8))
     fig.update_layout(xaxis=dict(gridwidth=2),
                       yaxis=dict(gridwidth=2),
@@ -202,6 +215,8 @@ def plot_bar_criteria(df_interest, countries_of_interest, criteria_list, title):
 
     fig.update_layout(barmode='group',
                       title=title)
+    fig.update_layout(
+    margin=dict(l=0, r=0, t=60, b=0), height=350)
     st.plotly_chart(fig, use_container_width=True)
 
 
@@ -224,7 +239,13 @@ def sunshine(sunshine_df):
         fig.add_trace(go.Scatter(x=months, y=L[i],
                             mode='lines',
                             name=n))
+    fig.update_layout(
+                      title='Sunshine hours per month')
+    fig.update_layout(
+    margin=dict(l=0, r=0, t=50, b=0), height=350)
     st.plotly_chart(fig, use_container_width=True)
+    
+    
     
     
     
