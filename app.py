@@ -35,7 +35,7 @@ with st.container():  # Logo et Titre
             os.path.join(os.getcwd() + "/whr.jpg"), width=250)
     with col2:
         
-        st.title('World Happiness Report Dataset')
+        st.title('French VS Scandinavian Happiness')
         st.header('Data Visualization Project')
         st.subheader('Elise CHIN & Mathilde DA CRUZ')
 st.write("_" * 34) 
@@ -64,7 +64,9 @@ col4.metric("Highest score", "7.84", "(Finland - 2021)")
 with st.container():
     col1, col2 = st.columns([1,1])
 with col2:
-    st.markdown("##### Happiness ladder : 0 = worst life you could have ; 10 = best life you could have")
+    st.markdown("##### Happiness ladder : ")
+    st.write(" 0 = worst life you could have")
+    st.write(" 10 = best life you could have")
 
 st.subheader('The factors')
 col1, col2, col3 = st.columns(3)
@@ -119,7 +121,7 @@ st.write("_" * 34)
 ###################################
 
 
-st.header('What could explain the happiness score at a global scale?') 
+st.header('What could explain the happiness score by region ? ') 
 
 america = ['North America','Latin America and Caribbean', 'North America and ANZ']
 american_countries = list(happiness_df[happiness_df['region'].isin(america)].country.unique())
@@ -170,6 +172,14 @@ with st.container():
         df_bub = happiness_df[happiness_df['year']==year]
         bubble(df_bub, country_list, x_axis, y_axis)
         
+st.write(
+            """
+            - Main criteria are differents at a world scale and european scale
+            - France performs badly concerning trust and freedom
+                - similar as unhappy countries
+                - far from Scandinavian countries
+            """)
+        
 st.write("_" * 34) 
 
 ##################################
@@ -184,16 +194,28 @@ with st.container():  # Information
         st.image(  # Logo
             os.path.join(os.getcwd() + "/table.png"), width=1200)      
     with col2:
-        country = st.selectbox('Country to compare',['Sweden','Norway','Denmark','Finland'])
-        criteria_list = ['economy', 'social_support', 'health', 'freedom', 'trust', 'generosity']
+        country = st.multiselect('Country to compare',['Sweden','Norway','Denmark','Finland'])
+        criteria_list = ['economy', 'social_support', 'health', 'freedom', 'corruption', 'generosity']
 
-        plot_bar_criteria(happiness_df, ['France', country], criteria_list, title=f"Contribution of criteria to the happiness score in France and {country}")
+        plot_bar_criteria(happiness_df, ['France'] + country, criteria_list, title=f"Contribution of criteria to the happiness score in France and {country}")
         
         sunshine(sunshine_df) 
 
 
 
+st.write("_" * 34) 
 
+##################################
+
+st.header('As a conclusion...')
+
+st.write(
+            """
+            - Main differences between France and Scandinavia : Generosity, Corruption, Freedom
+            - Main criteria at global scale = Impartials
+            - Main criteria at european scale = Subjectives!
+
+            """)
 
 
 

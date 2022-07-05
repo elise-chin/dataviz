@@ -148,12 +148,14 @@ def bubble(happiness_df, region, xaxis='economy', yaxis='health'):
         fig = px.scatter(df, x=xaxis, y=yaxis, color="happiness_score", animation_frame='year',
                      hover_name="country", size_max=30, height=600,
                     range_x=[-0.1,2],
-                    range_y =[-0.1,1.1])
+                    range_y =[-0.1,1.1],
+                        color_continuous_scale=px.colors.sequential.RdBu)
     else:
         fig = px.scatter(df, x=xaxis, y=yaxis, color="happiness_score", animation_frame='year',
                      hover_name="country", size_max=30, height=600,
                     range_x=[-0.1,0.8],
-                    range_y =[-0.1,0.8])
+                    range_y =[-0.1,0.8],
+                        color_continuous_scale=px.colors.sequential.RdBu)
     fig.update_traces(marker=dict(size=15, line=dict(width=1), opacity=0.8))
     fig.update_layout(xaxis=dict(gridwidth=2),
                       yaxis=dict(gridwidth=2),
@@ -199,7 +201,7 @@ def filter_row(df, column_name, condition):
 import plotly.graph_objects as go
 
 def plot_bar_criteria(df_interest, countries_of_interest, criteria_list, title):
-    
+    df_interest = df_interest.rename(columns={'trust':'corruption'})
     fig = go.Figure()
     
     for country in countries_of_interest:
