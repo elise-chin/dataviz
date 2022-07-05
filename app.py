@@ -34,8 +34,12 @@ with st.container():  # Logo et Titre
         st.image(  # Logo
             os.path.join(os.getcwd() + "/whr.jpg"), width=250)
     with col2:
-        st.title('Why are Scandinavians always happier than us?')
+        
+        st.title('World Happiness Report Dataset')
+        st.header('Data Visualization Project')
+        st.subheader('Elise CHIN & Mathilde DA CRUZ')
 st.write("_" * 34) 
+
 #############################
 st.header('Have you ever heard something like ...')
 with st.container():
@@ -44,23 +48,45 @@ with st.container():
         st.image(os.path.join(os.getcwd() + "/img1.jpg"), width=500)
     with col2:
         st.image(os.path.join(os.getcwd() + "/img2.jpg"), width=500)
-   
+
+st.subheader("Is that true? If so, why are Scandinavians always happier than us?")
 st.write("_" * 34) 
 ##################################
 
-st.header('But where does this "common knowledge" comes from ?')
+st.header('World Happiness Report Dataset')
 
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Number of countries", "155")
 col2.metric("Year of creation", "2012")
 col3.metric("Lowest score", "2.40", "-(Afghanistan - 2022)")
 col4.metric("Highest score", "7.84", "(Finland - 2021)")
-    
-        
+
+st.subheader('The factors')
+col1, col2, col3 = st.columns(3)
+col1.metric("Factor 1", "Economic production")
+col2.metric("Factor 2", "Social support")
+col3.metric("Factor 3", "Freedom")
+
+col4, col5, col6 = st.columns(3)
+col4.metric("Factor 4", "Life expectancy")
+col5.metric("Factor 5", "Absence of corruption")
+col6.metric("Factor 6", "Generosity")
+
+st.write("_" * 34) 
+##################################
+
+st.header('Where does this "common knowledge" come from?')
+  
 with st.container():  # Information
     col1, col2, col3 = st.columns([5,3,1])
     with col1:
         plot_map(happiness_df, scope='world')
+        st.write(
+            """
+            - Across the years: 
+                - Clear separation of happiness level between America, Europe and Oceania on one side (happier), and Africa, Asia on the other (less happy) 
+                - Nordic countries such as Finland, Denmark, Norway and Sweden are among the happiest in Europe
+            """)
     with col2:
         world = happiness_df.groupby('year').mean().reset_index()
 
@@ -73,6 +99,14 @@ with st.container():  # Information
         df_plot = pd.concat([interest_df,world])
         
         plot_score(df_plot)
+        
+        st.write(
+            """
+            - Average happiness scores:
+                - Finland, Denmark, Norway and Sweden → 7.5
+                - France → 6.5
+                - World → 5.5
+            """)
     with col3:
         evol(df_plot)
         
@@ -80,7 +114,7 @@ st.write("_" * 34)
 ###################################
 
 
-st.header('What could explain the happiness score at a global scale ?') 
+st.header('What could explain the happiness score at a global scale?') 
 
 america = ['North America','Latin America and Caribbean', 'North America and ANZ']
 american_countries = list(happiness_df[happiness_df['region'].isin(america)].country.unique())
